@@ -513,26 +513,13 @@ class CuraEngineBackend(QObject, Backend):
 
     ##  Called when a print time message is received from the engine.
     #
-    #   \param message The protobuf message containing the print time per feature and
+    #   \param message The protobuff message containing the print time and
     #   material amount per extruder
     def _onPrintTimeMaterialEstimates(self, message):
         material_amounts = []
         for index in range(message.repeatedMessageCount("materialEstimates")):
             material_amounts.append(message.getRepeatedMessage("materialEstimates", index).material_amount)
-        feature_times = {
-            "none": message.time_none,
-            "inset_0": message.time_inset_0,
-            "inset_x": message.time_inset_x,
-            "skin": message.time_skin,
-            "support": message.time_support,
-            "skirt": message.time_skirt,
-            "infill": message.time_infill,
-            "support_infill": message.time_support_infill,
-            "travel": message.time_travel,
-            "retract": message.time_retract,
-            "support_interface": message.time_support_interface
-        }
-        self.printDurationMessage.emit(feature_times, material_amounts)
+        self.printDurationMessage.emit(message.time, material_amounts)
 
     ##  Creates a new socket connection.
     def _createSocket(self):
