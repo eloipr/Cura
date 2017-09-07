@@ -26,7 +26,6 @@ Rectangle
     property bool monitoringPrint: false
 
     property variant printDuration: PrintInformation.currentPrintTime
-    property variant printDurationPerFeature: PrintInformation.printTimesPerFeature
     property variant printMaterialLengths: PrintInformation.materialLengths
     property variant printMaterialWeights: PrintInformation.materialWeights
     property variant printMaterialCosts: PrintInformation.materialCosts
@@ -391,29 +390,6 @@ Rectangle
         height: childrenRect.height
         visible: !monitoringPrint
 
-        UM.TooltipArea
-        {
-            id: timeSpecPerFeatureTooltipArea
-            width: timeSpec.width
-            height: timeSpec.height
-            anchors.left: parent.left
-            anchors.bottom: timeSpecDescription.top
-
-            text: {
-                var result = "";
-                return result;
-            }
-
-            Text
-            {
-                id: timeSpec
-                anchors.left: parent.left
-                anchors.bottom: parent.bottom
-                font: UM.Theme.getFont("large")
-                color: UM.Theme.getColor("text_subtext")
-                text: (!base.printDuration || !base.printDuration.valid) ? catalog.i18nc("@label", "00h 00min") : base.printDuration.getDisplayString(UM.DurationFormat.Short)
-            }
-        }
         Text
         {
             id: timeSpecDescription
