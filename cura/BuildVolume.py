@@ -1019,14 +1019,12 @@ class BuildVolume(SceneNode):
         if adhesion_type == "skirt":
             skirt_distance = self._getSettingFromAdhesionExtruder("skirt_gap")
             skirt_line_count = self._getSettingFromAdhesionExtruder("skirt_line_count")
-            bed_adhesion_size = skirt_distance + (skirt_line_count * self._getSettingFromAdhesionExtruder("skirt_brim_line_width")) * self._getSettingFromAdhesionExtruder("initial_layer_line_width_factor") / 100.0
             if len(used_extruders) > 1:
                 for extruder_stack in used_extruders:
                     bed_adhesion_size += extruder_stack.getProperty("skirt_brim_line_width", "value") * extruder_stack.getProperty("initial_layer_line_width_factor", "value") / 100.0
                 #We don't create an additional line for the extruder we're printing the skirt with.
                 bed_adhesion_size -= self._getSettingFromAdhesionExtruder("skirt_brim_line_width", "value") * self._getSettingFromAdhesionExtruder("initial_layer_line_width_factor", "value") / 100.0
         elif adhesion_type == "brim":
-            bed_adhesion_size = self._getSettingFromAdhesionExtruder("brim_line_count") * self._getSettingFromAdhesionExtruder("skirt_brim_line_width") * self._getSettingFromAdhesionExtruder("initial_layer_line_width_factor") / 100.0
             if self._global_container_stack.getProperty("machine_extruder_count", "value") > 1:
                 for extruder_stack in used_extruders:
                     bed_adhesion_size += extruder_stack.getProperty("skirt_brim_line_width", "value") * extruder_stack.getProperty("initial_layer_line_width_factor", "value") / 100.0
@@ -1066,7 +1064,7 @@ class BuildVolume(SceneNode):
     def _clamp(self, value, min_value, max_value):
         return max(min(value, max_value), min_value)
 
-    _skirt_settings = ["adhesion_type", "skirt_gap", "skirt_line_count", "skirt_brim_line_width", "brim_width", "brim_line_count", "raft_margin", "draft_shield_enabled", "draft_shield_dist", "initial_layer_line_width_factor"]
+    _skirt_settings = ["adhesion_type", "skirt_gap", "skirt_line_count", "skirt_brim_line_width", "brim_width", "brim_line_count", "raft_margin", "draft_shield_enabled", "draft_shield_dist"]
     _raft_settings = ["adhesion_type", "raft_base_thickness", "raft_interface_thickness", "raft_surface_layers", "raft_surface_thickness", "raft_airgap", "layer_0_z_overlap"]
     _extra_z_settings = ["retraction_hop_enabled", "retraction_hop"]
     _prime_settings = ["extruder_prime_pos_x", "extruder_prime_pos_y", "extruder_prime_pos_z", "prime_blob_enable"]
