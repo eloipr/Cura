@@ -400,29 +400,7 @@ Rectangle
             anchors.bottom: timeSpecDescription.top
 
             text: {
-                var order = ["inset_0", "inset_x", "skin", "infill", "support_infill", "support_interface", "support", "travel", "retract", "none"];
-                var visible_names = {
-                    "inset_0": "Outer Wall",
-                    "inset_x": "Inner Walls",
-                    "skin": "Skin",
-                    "infill": "Infill",
-                    "support_infill": "Support",
-                    "support_interface": "Support Interface",
-                    "support": "Helper Structures",
-                    "travel": "Travel",
-                    "retract": "Retractions",
-                    "none": "Other"
-                };
                 var result = "";
-                for(var feature in order)
-                {
-                    feature = order[feature];
-                    if(base.printDurationPerFeature[feature] && base.printDurationPerFeature[feature].totalSeconds > 0)
-                    {
-                        result += "<br/>" + visible_names[feature] + ": " + base.printDurationPerFeature[feature].getDisplayString(UM.DurationFormat.Short);
-                    }
-                }
-                result = result.replace(/^\<br\/\>/, ""); // remove newline before first item
                 return result;
             }
 
